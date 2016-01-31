@@ -11,7 +11,7 @@ all.
 
 ## Getting Started
 This project currently requires only [cmake](https://cmake.org/) and a modern
-c++ compiler.Currently Solver has only been run on OSX and Ubuntu, but there is
+c++ compiler. Currently Solver has only been run on OSX, Ubuntu, and Windows, but there is
 nothing that should prevent it from being run on any platform that supports the
 two things listed above.
 
@@ -22,6 +22,14 @@ root directory of the repository.
 
 To get started in Ubuntu, run `sudo apt-get update` then `sudo apt-get install
 cmake g++`. Then run `./build.sh`.
+
+I am not typically a windows user, but I was able to build and run the code in
+Windows. This involved [installing cmake](https://cmake.org/install/) and
+[Visual
+Studio](https://www.visualstudio.com/products/visual-studio-community-vs). Then
+made a new directory called `build` switched into it and ran `cmake -G "Visual
+Studio 14 2015 Win64" ..` from the Visual Studio Command Prompt. I was then able
+to open and build the generated project in the build folder.
 
 ## Get in touch
 If you are interested in this project, feel free to reach out. If you a Belmont
