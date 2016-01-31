@@ -8,20 +8,21 @@ int main(int argc, const char * argv[]) {
     using namespace std;
 
     short input[81]  = {
-        8, 1, 0, 0, 3, 0, 9, 0, 0,
-        3, 0, 5, 0, 0, 9, 0, 0, 0,
-        0, 7, 6, 0, 4, 0, 8, 0, 0,
-        0, 0, 0, 0, 5, 3, 0, 8, 4,
-        6, 0, 8, 9, 0, 4, 7, 0, 5,
-        4, 5, 0, 7, 1, 0, 0, 0, 0,
-        0, 0, 1, 0, 6, 0, 4, 9, 0,
-        0, 0, 0, 5, 0, 0, 3, 0, 1,
-        0, 0, 3, 0, 9, 0, 0, 7, 8
+        7, 8, 0, 0, 0, 3, 0, 0, 0,
+        0, 0, 0, 1, 0, 8, 3, 2, 0,
+        0, 0, 0, 0, 0, 0, 9, 7, 0,
+        0, 0, 0, 3, 0, 0, 0, 0, 0,
+        0, 0, 0, 0, 0, 0, 0, 0, 0,
+        0, 0, 0, 0, 0, 2, 0, 0, 0,
+        0, 7, 3, 0, 0, 0, 0, 0, 0,
+        0, 9, 8, 6, 0, 5, 0, 0, 0,
+        0, 0, 0, 9, 0, 0, 0, 3, 6
     };
 
     PuzzleData puzzleData;
     Puzzle puzzle;
     Solver solver (&puzzle);
+    PuzzleData numPossible;
 
     for (int x = 0; x < 9; x++) {
         for (int y = 0; y < 9; y++) {
@@ -37,6 +38,15 @@ int main(int argc, const char * argv[]) {
     solver.solve();
     puzzleData.fromPuzzle(&puzzle);
     puzzleData.prettyPrint();
+    
+    for (int row = 0; row < 9; row++) {
+        for (int col = 0; col < 9; col++) {
+            numPossible.values[col][row] = puzzle.row(row)->getCell(col)->numPossible();
+        }
+    }
+    
+    cout << "\n\nValues Possible\n";
+    numPossible.prettyPrint();
 
     cout << "\n\n";
 }

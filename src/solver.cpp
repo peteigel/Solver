@@ -12,6 +12,32 @@ Solver::Solver(Puzzle *puzzle) {
     this->puzzle = puzzle;
 }
 
+int Solver::induceValues(CellGroup* group) {
+    int cellsISolved = 0;
+    int numPossible;
+    Cell* lastPossible;
+
+    for (short value = 1; value <= 9; value++) {
+        numPossible = 0;
+        lastPossible = nullptr;
+
+        for (int index = 0; index < 9; index++) {
+            Cell* currentCell = group->getCell(index);
+            if (currentCell->isPossible(value)) {
+                numPossible++;
+                lastPossible = currentCell;
+            }
+        }
+
+        if (numPossible == 1 && lastPossible->getValue() == 0) {
+            lastPossible->setValue(value);
+            cellsISolved++;
+        }
+    }
+
+    return cellsISolved;
+}
+
 int Solver::deduceValues(CellGroup* group) {
     int cellsISolved = 0;
 
@@ -48,6 +74,9 @@ int Solver::pass() {
         cellsISolved += deduceValues(puzzle->row(index));
         cellsISolved += deduceValues(puzzle->col(index));
         cellsISolved += deduceValues(puzzle->box(index));
+        cellsISolved += induceValues(puzzle->row(index));
+        cellsISolved += induceValues(puzzle->col(index));
+        cellsISolved += induceValues(puzzle->box(index));
     }
 
     lastLastResult = lastResult;
