@@ -14,10 +14,10 @@ Solver::Solver(Puzzle *puzzle) {
 
 int Solver::deduceValues(CellGroup* group) {
     int cellsISolved = 0;
-    
+
     for (int index = 0; index < 9; index++) {
         short val = group->getCell(index)->getValue();
-        
+
         if (val != 0) {
             for (int indexTwo = 0; indexTwo < 9; indexTwo++) {
                 if (indexTwo != index) {
@@ -26,36 +26,36 @@ int Solver::deduceValues(CellGroup* group) {
             }
         }
     }
-    
+
     for (int index = 0; index < 9; index++) {
         Cell* cell = group->getCell(index);
-        
+
         if (cell->getValue() == 0 && cell->numPossible() == 1) {
             cell->setValue(cell->firstPossible());
             cellsSolved++;
             cellsISolved++;
         }
     }
-    
+
     return cellsISolved;
 }
 
 int Solver::pass() {
     int cellsISolved = 0;
     passes++;
-    
-    for (int index = 0; index < 8; index++) {
+
+    for (int index = 0; index < 9; index++) {
         cellsISolved += deduceValues(puzzle->row(index));
         cellsISolved += deduceValues(puzzle->col(index));
         cellsISolved += deduceValues(puzzle->box(index));
     }
-    
+
     lastLastResult = lastResult;
     lastResult = cellsISolved;
-    
+
     solved = (cellsSolved + cellsGiven == 81);
     hung = (lastLastResult == 0 && lastResult == 0);
-    
+
     return cellsISolved;
 }
 
@@ -67,7 +67,7 @@ void Solver::solve() {
             }
         }
     }
-    
+
     while (!solved && !hung) {
         pass();
     }
