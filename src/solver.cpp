@@ -12,7 +12,7 @@ Solver::Solver(Puzzle *puzzle) {
     this->puzzle = puzzle;
 }
 
-int Solver::induceValues(CellGroup* group) {
+int Solver::induceValues(CellGroup group) {
     int cellsISolved = 0;
     int numPossible;
     Cell* lastPossible;
@@ -22,7 +22,7 @@ int Solver::induceValues(CellGroup* group) {
         lastPossible = nullptr;
 
         for (int index = 0; index < 9; index++) {
-            Cell* currentCell = group->getCell(index);
+            Cell* currentCell = group.getCell(index);
             if (currentCell->isPossible(value)) {
                 numPossible++;
                 lastPossible = currentCell;
@@ -38,23 +38,23 @@ int Solver::induceValues(CellGroup* group) {
     return cellsISolved;
 }
 
-int Solver::deduceValues(CellGroup* group) {
+int Solver::deduceValues(CellGroup group) {
     int cellsISolved = 0;
 
     for (int index = 0; index < 9; index++) {
-        short val = group->getCell(index)->getValue();
+        short val = group.getCell(index)->getValue();
 
         if (val != 0) {
             for (int indexTwo = 0; indexTwo < 9; indexTwo++) {
                 if (indexTwo != index) {
-                    group->getCell(indexTwo)->setImpossible(val);
+                    group.getCell(indexTwo)->setImpossible(val);
                 }
             }
         }
     }
 
     for (int index = 0; index < 9; index++) {
-        Cell* cell = group->getCell(index);
+        Cell* cell = group.getCell(index);
 
         if (cell->getValue() == 0 && cell->numPossible() == 1) {
             cell->setValue(cell->firstPossible());

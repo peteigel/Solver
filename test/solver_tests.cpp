@@ -41,49 +41,49 @@ short sampleSolution[81] = {
 
 SCENARIO("A new solver is made with the Wikipedia puzzle") {
     Puzzle wiki;
-    
+
     for (int y = 0; y < 9; y++) {
         for (int x = 0; x < 9; x++) {
             Cell* cell = wiki.cell(x, y);
             cell->setValue(samplePuzzle[y * 9 + x]);
         }
     }
-    
+
     Solver testSolver {&wiki};
-    
+
     WHEN("We deduceValues for the first column") {
         int numSolved = testSolver.deduceValues(wiki.col(0));
-        
+
         THEN("Zero cells are solved") {
             REQUIRE(numSolved == 0);
         }
-        
+
         THEN("7 is impossible in cell 0,7") {
             REQUIRE(! wiki.cell(0, 7)->isPossible(7));
         }
-        
+
         THEN("8 is impossible in cell 0,2") {
              REQUIRE(! wiki.cell(0, 2)->isPossible(8));
         }
     }
-    
+
     WHEN("We deduceValues for all lists that contain 7,7") {
         int rowSolved = testSolver.deduceValues(wiki.row(7));
         int colSolved = testSolver.deduceValues(wiki.col(7));
         int boxSolved = testSolver.deduceValues(wiki.box(wiki.squareIndexOfCell(7, 7)));
-        
+
         THEN("At least one cell was solved") {
             REQUIRE(rowSolved + colSolved + boxSolved >= 1);
         }
-        
+
         THEN("The value of 7,7 is 3") {
             REQUIRE(wiki.cell(7, 7)->getValue() == 3);
         }
     }
-    
+
     WHEN("We try solve a puzzle just for fun") {
         testSolver.solve();
-        
+
         THEN("The solution magically appears") {
             for (int x = 0; x < 9; x++) {
                 for (int y = 0; y < 9; y++) {

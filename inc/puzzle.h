@@ -14,19 +14,16 @@
 
 class Puzzle {
     Cell cells [81];
-    CellGroup cellGroups [27];
-    template <class Archive> void serialize(Archive& ar, const unsigned version);
-    
+
 public:
-    Puzzle();
-    
+
     Cell* cell(int x, int y);
-    
-    CellGroup* cellGroup(int index);
-    CellGroup* row(int y);
-    CellGroup* col(int x);
-    CellGroup* box(int index);
-    
+
+    // CellGroup* cellGroup(int index);
+    CellGroup row(int y);
+    CellGroup col(int x);
+    CellGroup box(int index);
+
     static int cellIndexInSquare(int x, int y);
     static int squareIndexOfCell(int x, int y);
 };

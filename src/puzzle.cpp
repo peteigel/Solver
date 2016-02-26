@@ -8,38 +8,40 @@
 
 #include "puzzle.h"
 
-Puzzle::Puzzle() {
-    for (int x = 0; x < 9; x ++) {
-        for (int y = 0; y < 9; y++) {
-            Cell* cellPtr = cell(x, y);
-            
-            row(y)->setCell(x, cellPtr);
-            col(x)->setCell(y, cellPtr);
-            
-            box(squareIndexOfCell(x, y))->setCell(cellIndexInSquare(x, y), cellPtr);
-        }
-    }
-}
-
-template <class Archive>
-void Puzzle::serialize(Archive& archive , const unsigned int version) {
-    archive & cells;
-}
-
 Cell* Puzzle::cell(int x, int y) {
     return &cells[(y * 9) + x];
 }
 
-CellGroup* Puzzle::row(int y) {
-    return &cellGroups[y * 3];
+CellGroup Puzzle::row(int y) {
+    CellGroup group;
+    for (int x = 0; x < 9; x++) {
+        group.setCell(x, cell(x, y));
+    }
+
+    return group;
 }
 
-CellGroup* Puzzle::col(int x) {
-    return &cellGroups[x * 3 + 1];
+CellGroup Puzzle::col(int x) {
+    CellGroup group;
+    for (int y = 0; y < 9; y++) {
+        group.setCell(y, cell(x, y));
+    }
+
+    return group;
 }
 
-CellGroup* Puzzle::box(int index) {
-    return &cellGroups[index * 3 + 2];
+CellGroup Puzzle::box(int index) {
+    int topLeftX = (index % 3) * 3;
+    int topLeftY = (index / 3) * 3;
+    CellGroup group;
+
+    for (int x = 0; x < 3; x++) {
+        for (int y = 0; y < 3; y++) {
+            group.setCell(y * 3 + x, cell(x + topLeftX, y + topLeftY));
+        }
+    }
+
+    return group;
 }
 
 int Puzzle::cellIndexInSquare(int x, int y) {

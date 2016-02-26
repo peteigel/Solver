@@ -38,13 +38,13 @@ int main(int argc, const char * argv[]) {
     solver.solve();
     puzzleData.fromPuzzle(&puzzle);
     puzzleData.prettyPrint();
-    
+
     for (int row = 0; row < 9; row++) {
         for (int col = 0; col < 9; col++) {
-            numPossible.values[col][row] = puzzle.row(row)->getCell(col)->numPossible();
+            numPossible.values[col][row] = puzzle.row(row).getCell(col)->numPossible();
         }
     }
-    
+
     cout << "\n\nValues Possible\n";
     numPossible.prettyPrint();
 
