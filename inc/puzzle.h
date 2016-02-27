@@ -19,10 +19,12 @@ public:
 
     Cell* cell(int x, int y);
 
-    // CellGroup* cellGroup(int index);
+    CellGroup cellGroup(int id);
     CellGroup row(int y);
     CellGroup col(int x);
     CellGroup box(int index);
+
+    int degreesOfFreedom();
 
     static int cellIndexInSquare(int x, int y);
     static int squareIndexOfCell(int x, int y);

@@ -1,0 +1,7 @@
+{
+    "name" : "build script",
+    "cmd" : "./build.sh",
+    "cwd" : "{PROJECT_PATH}",
+    "sh" : false,
+    "errorMatch": "\n(?<file>[\\/0-9a-zA-Z\\._]+):(?<line>\\d+)"
+}

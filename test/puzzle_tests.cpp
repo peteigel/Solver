@@ -71,6 +71,20 @@ SCENARIO("A new puzzle is constructed") {
             REQUIRE(testP.box(1).getCell(1) == cellPtr);
         }
     }
+
+    THEN("The degrees of freedom is 81 * 8") {
+        REQUIRE(testP.degreesOfFreedom() == 81 * 8);
+    }
+}
+
+SCENARIO("When we set a cell's value") {
+    Puzzle testP;
+
+    testP.cell(1, 3)->setValue(4);
+
+    THEN("The degrees of freedom is 80 * 8") {
+        REQUIRE(testP.degreesOfFreedom() == 80 * 8);
+    }
 }
 
 SCENARIO("We copy a puzzle") {
