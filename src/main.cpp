@@ -21,7 +21,7 @@ int main(int argc, const char * argv[]) {
 
     PuzzleData puzzleData;
     Puzzle puzzle;
-    Solver solver (&puzzle);
+    Solver solver (puzzle);
     PuzzleData numPossible;
 
     for (int x = 0; x < 9; x++) {

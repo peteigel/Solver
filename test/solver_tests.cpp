@@ -49,7 +49,7 @@ SCENARIO("A new solver is made with the Wikipedia puzzle") {
         }
     }
 
-    Solver testSolver {&wiki};
+    Solver testSolver {wiki};
 
     WHEN("We deduceValues for the first column") {
         int numSolved = testSolver.deduceValues(wiki.col(0));
@@ -87,7 +87,7 @@ SCENARIO("A new solver is made with the Wikipedia puzzle") {
         THEN("The solution magically appears") {
             for (int x = 0; x < 9; x++) {
                 for (int y = 0; y < 9; y++) {
-                    REQUIRE(wiki.cell(x, y)->getValue() == sampleSolution[y * 9 + x]);
+                    REQUIRE(testSolver.getPuzzle().cell(x, y)->getValue() == sampleSolution[y * 9 + x]);
                 }
             }
         }

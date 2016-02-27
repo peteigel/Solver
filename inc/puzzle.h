@@ -1,13 +1,5 @@
-//
-//  puzzle.h
-//  solver2
-//
-//  Created by Pete Eigel on 8/23/15.
-//  Copyright (c) 2015 Pete Eigel. All rights reserved.
-//
-
-#ifndef __solver2__puzzle__
-#define __solver2__puzzle__
+#ifndef h_solver__puzzle
+#define h_solver__puzzle
 
 #include "cell.h"
 #include "cellGroup.h"
@@ -30,4 +22,4 @@ public:
     static int squareIndexOfCell(int x, int y);
 };
 
-#endif /* defined(__solver2__puzzle__) */
+#endif

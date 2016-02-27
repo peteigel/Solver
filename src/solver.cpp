@@ -8,8 +8,16 @@
 
 #include "solver.h"
 
-Solver::Solver(Puzzle *puzzle) {
+Solver::Solver(Puzzle puzzle) {
     this->puzzle = puzzle;
+}
+
+Puzzle Solver::getPuzzle () {
+    return puzzle;
+}
+
+bool Solver::isSolved () {
+    return solved;
 }
 
 int Solver::induceValues(CellGroup group) {
@@ -71,12 +79,12 @@ int Solver::pass() {
     passes++;
 
     for (int index = 0; index < 9; index++) {
-        cellsISolved += deduceValues(puzzle->row(index));
-        cellsISolved += deduceValues(puzzle->col(index));
-        cellsISolved += deduceValues(puzzle->box(index));
-        cellsISolved += induceValues(puzzle->row(index));
-        cellsISolved += induceValues(puzzle->col(index));
-        cellsISolved += induceValues(puzzle->box(index));
+        cellsISolved += deduceValues(puzzle.row(index));
+        cellsISolved += deduceValues(puzzle.col(index));
+        cellsISolved += deduceValues(puzzle.box(index));
+        cellsISolved += induceValues(puzzle.row(index));
+        cellsISolved += induceValues(puzzle.col(index));
+        cellsISolved += induceValues(puzzle.box(index));
     }
 
     lastLastResult = lastResult;
@@ -91,7 +99,7 @@ int Solver::pass() {
 void Solver::solve() {
     for (int y = 0; y < 9; y++) {
         for (int x = 0; x < 9; x++) {
-            if (puzzle->cell(x, y)->getValue() != 0) {
+            if (puzzle.cell(x, y)->getValue() != 0) {
                 cellsGiven++;
             }
         }

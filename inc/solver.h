@@ -1,20 +1,12 @@
-//
-//  solver.h
-//  solver2
-//
-//  Created by Pete Eigel on 8/25/15.
-//  Copyright (c) 2015 Pete Eigel. All rights reserved.
-//
-
-#ifndef __solver2__solver__
-#define __solver2__solver__
+#ifndef h_solver__solver__
+#define h_solver__solver__
 
 #include "puzzle.h"
 #include "cellGroup.h"
 #include "cell.h"
 
 class Solver {
-    Puzzle* puzzle   = nullptr;
+    Puzzle puzzle;
     bool solved      = false;
     bool hung        = false;
 
@@ -26,7 +18,12 @@ class Solver {
     int lastLastResult  = -1;
 
 public:
-    Solver (Puzzle* puzzle);
+    Solver (Puzzle puzzle);
+
+    Puzzle getPuzzle();
+    bool isSolved();
+    bool isHung();
+
     void solve();
     int pass();
 
@@ -34,4 +31,4 @@ public:
     int induceValues(CellGroup group);
 };
 
-#endif /* defined(__solver2__solver__) */
+#endif
