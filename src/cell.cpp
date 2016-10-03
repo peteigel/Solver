@@ -12,12 +12,12 @@ Cell<max_val>::Cell () {
 
 template <size_t max_val>
 bool& Cell<max_val>::access (const int value) {
-	return data[value + 1];
+	return data[value - 1];
 }
 
 template <size_t max_val>
 const bool& Cell<max_val>::access (const int value) const {
-	return data[value + 1];
+	return data[value - 1];
 }
 
 template <size_t max_val>

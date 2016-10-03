@@ -24,7 +24,7 @@ std::array<Cell<Puzzle<_n>::_max_val>*, Puzzle<_n>::_max_val> Puzzle<_n>::col (c
 	std::array<Cell<_max_val>*, _max_val> arr;
 
 	for (size_t r = 0; r < _max_val; r++) {
-		arr[c] = &(access(r, c));
+		arr[r] = &(access(r, c));
 	}
 
 	return arr;
