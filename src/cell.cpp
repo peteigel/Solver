@@ -34,7 +34,7 @@ int Cell<max_val>::value () const {
 			if (access(val)) { return val; }
 		}
 
-		throw logic_error("No Possible Values");
+		throw new logic_error("Cell has zero possible values");
 	}
 }
 

@@ -31,6 +31,14 @@ namespace sudoku {
 		std::array<Cell<_max_val>*, _max_val> row (const std::size_t r);
 		std::array<Cell<_max_val>*, _max_val> col (const std::size_t c);
 		std::array<Cell<_max_val>*, _max_val> box (const std::size_t b);
+
+		std::array<Cell<_max_val>*, _max_val> group (const std::size_t g) {
+			switch (g / _max_val) {
+				case 0: return row(g % _max_val);
+				case 1: return col(g % _max_val);
+				case 3: return box(g % _max_val);
+			}
+		};
 	};
 }
 
