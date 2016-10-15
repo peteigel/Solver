@@ -4,14 +4,19 @@
 
 namespace sudoku {
 	namespace solver {
-		template <int n>
-		int induceValues (*Puzzle<n> puzzle);
+		enum solver_result {success, hung, invalid};
 
-		template <int n>
-		int deduceValues (*Puzzle<n> puzzle);
+		template <std::size_t n>
+		void induce_values (Puzzle<n>& puzzle);
 
-		template <int n>
-		int pass (*Puzzle<n> puzzle);
+		template <std::size_t n>
+		void deduce_values (Puzzle<n>& puzzle);
+
+		template <std::size_t n>
+		int pass (Puzzle<n>& puzzle);
+
+		template <std::size_t n>
+		solver_result try_solve (Puzzle<n>& puzzle);
 	}
 }
 

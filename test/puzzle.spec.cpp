@@ -1,5 +1,6 @@
 #include "gtest/gtest.h"
 #include "sudoku.h"
+#include <stdexcept>
 
 using namespace std;
 using namespace sudoku;
@@ -49,4 +50,23 @@ TEST(cell, determine_value_from_elimination) {
 
 	EXPECT_EQ(test_cell.num_possible(), 1);
 	EXPECT_EQ(test_cell.value(), 8);
+}
+
+TEST(cell, throws_when_no_possible_value) {
+	auto test_cell = Cell<9> {};
+
+	for (int val = 1; val <= 9; val++) {
+		test_cell.access(val) = false;
+	}
+
+	EXPECT_THROW(test_cell.value(), invalid_puzzle);
+}
+
+TEST(cell, operator_overloads) {
+	auto test_cell = Cell<9> {};
+	EXPECT_TRUE(test_cell == 0);
+	test_cell = 9;
+	EXPECT_TRUE(test_cell == 9);
+	EXPECT_FALSE(test_cell[1]);
+	EXPECT_TRUE(test_cell[9]);
 }

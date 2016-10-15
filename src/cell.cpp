@@ -1,6 +1,5 @@
 #include "sudoku.h"
 #include <algorithm>
-#include <stdexcept>
 
 using namespace std;
 using namespace sudoku;
@@ -27,21 +26,25 @@ int Cell<max_val>::num_possible () const {
 
 template <size_t max_val>
 int Cell<max_val>::value () const {
-	if (num_possible() != 1) {
+	if (num_possible() > 1) {
 		return 0;
 	} else {
 		for (int val = 1; val <= max_val; val++) {
 			if (access(val)) { return val; }
 		}
-
-		throw new logic_error("Cell has zero possible values");
 	}
+
+	throw invalid_puzzle("Cell has zero possible values");
 }
 
 template <size_t max_val>
 void Cell<max_val>::set_value (const int value) {
-	data.fill(false);
-	access(value) = true;
+	if (value == 0) {
+		data.fill(true);
+	} else {
+		data.fill(false);
+		access(value) = true;
+	}
 }
 
 namespace sudoku {

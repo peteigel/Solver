@@ -14,5 +14,6 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 include_directories (inc)
 add_subdirectory (src)
-add_subdirectory (test)
+
 add_subdirectory (vendor/googletest)
+add_subdirectory (test)
