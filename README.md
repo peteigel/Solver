@@ -1,13 +1,11 @@
 Welcome to Solver, a sudoku solver written in modern C++.
 
 ## Current Status
-Solver is not yet entirely functional. It can solve some sudoku puzzles, but not
-all.
+The solver library is mostly complete (passing tests), but there is not yet any sort of interface (graphical or otherwise).
 
 ## Todo List
-1. Get Solver solving.
-2. Build out .csv (or similiar) import/export.
-3. Make a command-line executable that takes an input file and options
+1. Build out .csv (or similiar) import/export.
+1. Make a command-line executable that takes an input file and options
 
 ## Getting Started
 This project currently requires only [cmake](https://cmake.org/) and a modern
@@ -17,8 +15,15 @@ two things listed above.
 
 To get started in OSX, you must first install
 [homebrew](https://github.com/Homebrew/homebrew/blob/master/share/doc/homebrew/Installation.md).
-Then run `brew update && brew install cmake`. Finally, run `./build.sh` from the
-root directory of the repository.
+Then run in the project directory
+```bash
+brew update
+brew install cmake
+mkdir build
+cd build
+cmake ..  #Optionally add -G Xcode to generate an Xcode project instead of a makefile
+make
+```
 
 To get started in Ubuntu, run `sudo apt-get update` then `sudo apt-get install
 cmake g++`. Then run `./build.sh`.
@@ -33,5 +38,4 @@ to open and build the generated project in the build folder.
 
 ## Get in touch
 If you are interested in this project, feel free to reach out. If you a Belmont
-student, the Belmont Sciences Slack channel is where I would like to keep most of
-the discussion.
+student, the Belmont Sciences Slack channel is where I would like to keep most of the discussion.
