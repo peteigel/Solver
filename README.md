@@ -1,4 +1,6 @@
-Welcome to Solver, a sudoku solver written in modern C++.
+[![Build Status](https://travis-ci.org/peteigel/Solver.svg?branch=master)](https://travis-ci.org/peteigel/Solver)
+
+Welcome to **Solver**, a sudoku solver written in modern C++.
 
 ## Current Status
 The solver library is mostly complete (passing tests), but there is not yet any sort of interface (graphical or otherwise).
