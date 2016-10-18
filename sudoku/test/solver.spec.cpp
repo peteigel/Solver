@@ -1,6 +1,6 @@
 #include "gtest/gtest.h"
 #include "sudoku.h"
-#include "solver.h"
+#include "sudoku/solver.h"
 
 #include <iostream>
 #include <algorithm>

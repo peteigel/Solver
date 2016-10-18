@@ -1,4 +1,4 @@
-#include "solver.h"
+#include "sudoku/solver.h"
 #include <algorithm>
 #include <iterator>
 #include <iostream>
