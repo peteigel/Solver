@@ -74,5 +74,21 @@ namespace sudoku {
 
 			return puzzle;
 		};
+
+		template <std::size_t n, typename char_t>
+		void write_puzzle (Puzzle<n> puzzle, std::basic_ostream<char_t>& stream, std::string col_sep, std::string row_sep) {
+			for (int row = 0; row < puzzle.max_val(); row++) {
+				for (int col = 0; col < puzzle.max_val(); col++) {
+					stream << puzzle.access(row, col).value();
+					if (col < puzzle.max_val() - 1) {
+						stream << col_sep;
+					}
+				}
+
+				if (row < puzzle.max_val() - 1) {
+					stream << row_sep;
+				}
+			}
+		};
 	}
 }

@@ -55,3 +55,9 @@ TEST_F(sample_2puzzle, read_wide_csv) {
 	io::pretty_print(output);
 	EXPECT_TRUE(equal(begin(output.access()), end(output.access()), begin(vals)));
 }
+
+TEST_F(sample_2puzzle, write_csv) {
+	ostringstream out;
+	io::write_puzzle(puz, out);
+	EXPECT_EQ(out.str(), "4,1,3,2\n3,2,0,1\n2,3,1,4\n0,4,2,3");
+}

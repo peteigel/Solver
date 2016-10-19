@@ -21,11 +21,11 @@ namespace sudoku {
 		template <size_t n, typename char_t>
 		Puzzle<n> read_puzzle (std::basic_istream<char_t>& stream);
 
-		// template <std::size_t n>
-		// void write_puzzle (Puzzle<n> puzzle, std::ostream& stream, std::string col_sep, std::string row_sep);
-		//
-		// template <std::size_t n>
-		// void write_puzzle (Puzzle<n> puzzle, std::ostream& stream) { write_puzzle(puzzle, stream, ",", "\n"); };
+		template <std::size_t n, typename char_t>
+		void write_puzzle (Puzzle<n> puzzle, std::basic_ostream<char_t>& stream, std::string col_sep, std::string row_sep);
+
+		template <std::size_t n, typename char_t>
+		void write_puzzle (Puzzle<n> puzzle, std::basic_ostream<char_t>& stream) { write_puzzle(puzzle, stream, ",", "\n"); };
 	}
 }
 
