@@ -92,7 +92,7 @@ solver::solver_result solver::try_solve (Puzzle<n>& puzzle) {
 		return solver::solver_result::invalid;
 	}
 
-	if (count_solved(puzzle) == puzzle.n_cells()) return solver::solver_result::success;
+	if (count_solved(puzzle) == puzzle.num_cells()) return solver::solver_result::success;
 	else return solver::solver_result::hung;
 }
 
