@@ -1,6 +1,7 @@
 #include "gtest/gtest.h"
 #include "sudoku.h"
 #include "sudoku/solver.h"
+#include "sudoku/io.h"
 
 #include <iostream>
 #include <algorithm>
@@ -131,25 +132,35 @@ TEST_F(hard_2puzzle, try_solve) {
 }
 
 TEST_F(multiple_2puzzle, solve) {
+	io::enable_logging();
 	auto result = solver::solve(puz, true);
-	EXPECT_EQ(get<1>(result), solver::success);
-	EXPECT_GT(get<2>(result), 1);
+	EXPECT_EQ(result.result, solver::success);
+	EXPECT_GT(result.num_solutions, 1);
+	io::disable_logging();
+
+	auto fast_result = solver::solve(puz, false);
+	EXPECT_EQ(fast_result.num_solutions, 1);
+	EXPECT_LT(fast_result.num_branches, result.num_branches);
+}
+
+
+TEST_F(evil_3puzzle, solve) {
+	io::enable_logging();
+	auto result = solver::solve(puz, false);
+	EXPECT_EQ(result.num_solutions, 1);
+	EXPECT_GT(result.num_branches, 0);
+	EXPECT_EQ(result.result, solver::success);
+	EXPECT_TRUE(equal(begin(result.solution.access()), end(result.solution.access()), begin(solutionArr)));
+	io::disable_logging();
 }
 
 TEST_F(evil_3puzzle, solve_exhaustive) {
-	auto result = solver::solve(puz, true);
-	auto solution = get<0>(result);
-	EXPECT_EQ(get<2>(result), 1);
-	EXPECT_EQ(get<1>(result), solver::success);
-	EXPECT_TRUE(equal(begin(solution.access()), end(solution.access()), begin(solutionArr)));
-}
-
-TEST_F(evil_3puzzle, solve) {
-	auto result = solver::solve(puz, true);
-	auto solution = get<0>(result);
-	EXPECT_EQ(get<2>(result), 1);
-	EXPECT_EQ(get<1>(result), solver::success);
-	EXPECT_TRUE(equal(begin(solution.access()), end(solution.access()), begin(solutionArr)));
+	auto normal_result = solver::solve(puz, false);
+	auto exhaustive_result = solver::solve(puz, true);
+	EXPECT_EQ(exhaustive_result.num_solutions, 1);
+	EXPECT_EQ(exhaustive_result.result, solver::success);
+	EXPECT_GE(exhaustive_result.num_branches, normal_result.num_branches);
+	EXPECT_TRUE(equal(begin(exhaustive_result.solution.access()), end(exhaustive_result.solution.access()), begin(solutionArr)));
 }
 
 TEST_F(evil_3puzzle, benchmark) {
