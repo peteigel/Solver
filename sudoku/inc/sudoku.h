@@ -5,8 +5,6 @@
 #include <exception>
 #include <stdexcept>
 
-// A change
-
 namespace sudoku {
 	template <std::size_t max_val>
 	class Cell {
