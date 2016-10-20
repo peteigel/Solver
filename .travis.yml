@@ -11,6 +11,6 @@ script:
     - set -e
     - mkdir build
     - cd build
-    - cmake . -DCMAKE_CXX_COMPILER=clang++-3.9 -DCMAKE_CXX_FLAGS=-stdlib=libc++
+    - cmake .. -DCMAKE_CXX_COMPILER=clang++-3.9 -DCMAKE_CXX_FLAGS=-stdlib=libc++
     - make -j4
     - ctest -V
