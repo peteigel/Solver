@@ -3,3 +3,4 @@ lib
 build
 build-*
 .DS_Store
+/dev-rebuild.sh
