@@ -3,11 +3,11 @@
 Welcome to **Solver**, a sudoku solver written in modern C++.
 
 ## Current Status
-The solver library is mostly complete (passing tests), but there is not yet any sort of interface (graphical or otherwise).
-
-## Todo List
-1. Build out .csv (or similiar) import/export.
-1. Make a command-line executable that takes an input file and options
+Solver is mostly complete. If you compile it you can use the `solver` binary to load a puzzle from csv and solver it.
+```bash
+./bin/solver my_puzzle.csv
+```
+There is more functionality exposed in the library, which could be easily exposed with command-line flags, but I have not yet.
 
 ## Getting Started
 This project currently requires only [cmake](https://cmake.org/) and a modern
