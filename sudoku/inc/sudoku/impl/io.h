@@ -8,13 +8,18 @@ namespace sudoku {
 	namespace io {
 		template <size_t n, typename char_t>
 		void pretty_print (Puzzle<n> puzzle, std::basic_ostream<char_t>& stream) {
+			stream << std::hex;
 			for (size_t row = 0; row < puzzle.max_val(); row++) {
 				for (size_t col = 0; col < puzzle.max_val(); col++) {
-					auto val = puzzle.access(row, col).value();
-					if (!val) {
-						stream << " ";
-					} else {
-						stream << std::hex << val;
+					try {
+						auto val = puzzle.access(row, col).value();
+						if (!val) {
+							stream << " ";
+						} else {
+							stream << val;
+						}
+					} catch (invalid_puzzle& e) {
+						stream << "X";
 					}
 
 					if (col == puzzle.max_val() - 1) {
@@ -35,12 +40,18 @@ namespace sudoku {
 						}
 
 						if (i < n - 1) {
-							stream << '+';
+							if (n > 2) {
+								stream << "+-";
+							} else {
+								stream <<  "+";
+							}
 						}
 					}
 					stream << '\n';
 				}
 			}
+
+			stream << std::dec;
 		};
 
 		template <size_t n, typename char_t>

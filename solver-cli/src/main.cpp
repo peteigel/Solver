@@ -28,7 +28,7 @@ int main (int argc, char** argv) {
 		} else if (result.num_solutions == 0) {
 			cout << "No solutions found.\n";
 		} else if (result.num_solutions > 1) {
-			cout << result.num_solutions << " solutions found:";
+			cout << result.num_solutions << " solutions found:\n";
 			io::pretty_print(result.solution);
 		} else {
 			cerr << "Unexpected solver result. Please report this bug.";
