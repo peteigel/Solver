@@ -1,7 +1,6 @@
 #include "sudoku/solver.h"
 #include <algorithm>
 #include <iterator>
-#include <iostream>
 #include <deque>
 
 using namespace std;
@@ -33,68 +32,67 @@ auto find_candidate = [](auto& puzzle) -> tuple<bool, size_t, size_t> {
 };
 
 template <size_t n>
-void printPuzzle (Puzzle<n> puz) {
-	for (size_t row = 0; row < puz.max_val(); row++) {
-		for (size_t col = 0; col < puz.max_val(); col++) {
-			cout << puz.access(row, col).value();
-		}
-		cout << '\n';
-	}
-    cout << '\n';
-};
-
-template <size_t n>
-tuple<Puzzle<n>, solver::solver_result, int> solver::solve (Puzzle<n> puzzle, bool exhaustive) {
+solver::solve_info<n> solver::solve (Puzzle<n> puzzle, bool exhaustive) {
+	solve_info<n> result;
 	deque<Puzzle<n>> queue;
 	queue.push_front(puzzle);
-	int num_solutions = 0;
-	solver::solver_result best_result = solver::hung;
-	Puzzle<n> solution;
 
-	while (!queue.empty() && (num_solutions == 0 || exhaustive )) {
+	while (!queue.empty() && (result.num_solutions == 0 || exhaustive )) {
 		auto currentGuess = queue.front();
 		queue.pop_front();
 		auto guess_result = solver::try_solve(currentGuess);
 		if (guess_result == solver::hung) {
-			solver::add_guesses(currentGuess, queue);
-		} else if (guess_result < best_result) {
-			best_result = guess_result;
-			solution = currentGuess;
+			result.num_branches += solver::add_guesses(currentGuess, queue);
+		} else if (guess_result < result.result) {
+			result.result = guess_result;
+			result.solution = currentGuess;
 		}
 
 		if (guess_result == solver::success) {
-			num_solutions++;
-			//printPuzzle(currentGuess);
+			result.num_solutions++;
+			if (io::log) {
+				*io::log << "\nSolution Found:\n";
+				io::pretty_print(currentGuess, *io::log);
+			}
 		}
 	}
 
-	return make_tuple(solution, best_result, num_solutions);
+	return result;
 }
 
 template <size_t n, typename queue_t>
-void solver::add_guesses (const Puzzle<n>& puzzle, queue_t& queue) {
+int solver::add_guesses (const Puzzle<n>& puzzle, queue_t& queue) {
 	auto candidate_cell = find_candidate(puzzle);
+	int branch_count = 0;
 
 	if (get<0>(candidate_cell)) {
 		for (int val = 1; val <= puzzle.max_val(); val++) {
 			if (puzzle.access(get<1>(candidate_cell), get<2>(candidate_cell)).access(val)) {
-				//cout << "guess(" << get<1>(candidate_cell) << ", " << get<2>(candidate_cell) << ") -> " << val << '\n';
+				branch_count++;
+				if (io::log) {
+					*io::log << "guess(" << get<1>(candidate_cell) << ", " << get<2>(candidate_cell) << ") -> " << val << '\n';
+				}
 				queue.push_front(puzzle);
 				queue.front().access(get<1>(candidate_cell), get<2>(candidate_cell)).set_value(val);
 			}
 		}
 	}
+
+	return branch_count;
 }
 
 template <size_t n>
 solver::solver_result solver::try_solve (Puzzle<n>& puzzle) {
 	try {
 		while (solver::pass(puzzle) > 0);
-	} catch (invalid_puzzle) {
+	} catch (invalid_puzzle& e) {
+		if (io::log) {
+			*io::log << "No solution for this branch: " << e.what() << '\n';
+		}
 		return solver::solver_result::invalid;
 	}
 
-	if (count_solved(puzzle) == puzzle.n_cells()) return solver::solver_result::success;
+	if (count_solved(puzzle) == puzzle.num_cells()) return solver::solver_result::success;
 	else return solver::solver_result::hung;
 }
 
@@ -150,8 +148,8 @@ void solver::deduce_values (Puzzle<n>& puzzle) {
 
 namespace sudoku {
 	namespace solver {
-		template tuple<Puzzle<2>, solver::solver_result, int> solver::solve<2> (Puzzle<2> puzzle, bool exhaustive);
-		template tuple<Puzzle<3>, solver::solver_result, int> solver::solve<3> (Puzzle<3> puzzle, bool exhaustive);
-		template tuple<Puzzle<4>, solver::solver_result, int> solver::solve<4> (Puzzle<4> puzzle, bool exhaustive);
+		template solve_info<2> solver::solve<2> (Puzzle<2> puzzle, bool exhaustive);
+		template solve_info<3> solver::solve<3> (Puzzle<3> puzzle, bool exhaustive);
+		template solve_info<4> solver::solve<4> (Puzzle<4> puzzle, bool exhaustive);
 	}
 }

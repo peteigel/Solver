@@ -1,11 +1,22 @@
-#ifndef inc_solver
-#define inc_solver
-#include "sudoku.h"
+#ifndef inc_sudoku_solver
+#define inc_sudoku_solver
 #include <tuple>
+#include <iostream>
+#include "sudoku.h"
+#include "sudoku/io.h"
 
 namespace sudoku {
 	namespace solver {
-		enum solver_result {success, hung, invalid, undefined};
+
+		enum solver_result {success, invalid, hung};
+
+		template <int n>
+		struct solve_info {
+			solver_result result = hung;
+			int num_solutions = 0;
+			int num_branches = 0;
+			Puzzle<n> solution;
+		};
 
 		const int max_branch = 4;
 
@@ -22,10 +33,10 @@ namespace sudoku {
 		solver_result try_solve (Puzzle<n>& puzzle);
 
 		template <size_t n>
-		std::tuple<Puzzle<n>, solver_result, int> solve (Puzzle<n> puzzle, bool exhaustive);
+		solve_info<n> solve (Puzzle<n> puzzle, bool exhaustive);
 
 		template <size_t n, typename queue_t>
-		void add_guesses (const Puzzle<n>& puzzle, queue_t& queue);
+		int add_guesses (const Puzzle<n>& puzzle, queue_t& queue);
 	}
 }
 
