@@ -10,8 +10,8 @@ using namespace sudoku;
 
 int main (int argc, char** argv) {
 	try {
-		char* filenmae = argv[argc - 1];
-		ifstream input (filenmae, ifstream::in);
+		char* filename = argv[argc - 1];
+		ifstream input (filename, ifstream::in);
 		auto puz = io::read_puzzle<3>(input);
 
 		cout << "Puzzle read successfully.\n";
